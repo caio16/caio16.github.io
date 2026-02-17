@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projeto Acadêmico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── REUTILIZANDO SEU ESTILO BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b0b0f;
+      --surface: #111117;
+      --border: #1e1e28;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --accent: #7DF9C2;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      line-height: 1.7;
+      padding: 4rem 2rem;
+    }
+    /* Ruído de Fundo */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: -1; opacity: 0.4;
+    }
+
+    /* ── ESTILOS ESPECÍFICOS DA PÁGINA DE PROJETO ── */
+    .container {
+      max-width: 900px; /* Aumentei um pouco para caber as 2 imagens lado a lado */
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 3rem;
+      transition: opacity 0.2s;
+    }
+    .back-btn:hover { opacity: 0.8; }
+
+    header { margin-bottom: 4rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+    
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .meta-info {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    /* Área de Conteúdo */
+    .content { font-size: 1rem; color: var(--text); }
+    .content p { margin-bottom: 1.5rem; }
+    .content h2 { 
+        font-family: 'Syne', sans-serif; 
+        color: var(--text);
+        letter-spacing: -0.03em;
+        margin-top: 3rem; 
+        margin-bottom: 1.5rem;
+        line-height: 1.15; 
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    
+    /* ── NOVA GALERIA (Duas colunas) ── */
+    .project-gallery {
+      display: grid;
+      grid-template-columns: 1fr; /* Duas colunas iguais */
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-label {
+      padding: 0.75rem 1rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Responsivo: No celular vira uma coluna só */
+    @media (max-width: 768px) {
+      .project-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Links do Rodapé */
+    .project-links {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 1rem;
+    }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      border: 1px solid var(--accent);
+      color: var(--bg);
+      background: var(--accent);
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: transparent; color: var(--accent); }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="back-btn">← Home</a>
+
+    <header>
+      <h1>Análise de Grafos em R</h1>
+      <div class="meta-info">
+        <span>Ano: 2024 - 2026</span>
+        <span>Stack: R, Bioinformática</span>
+      </div>
+    </header>
+
+    <div class="project-gallery">
+      <div class="gallery-item">
+        <div class="gallery-label">// Snippet do Código (R)</div>
+        <img src="grafo_r.png" alt="Print do Código R">
+      </div>
+
+    <div class="content">
+      <h2>O desafio.</h2>
+      <p>
+        <span style="color: #7DF9C2;">Existe alguma relação entre biomarcadores e a gravidade do quadro clínico 
+        de pacientes com transtorno do espectro autista (TEA)?</span> Essa questão serviu como ponto de partida para 
+        um estudo aprofundado em redes psicométricas, que utilizou uma abordagem inovadora de análise de grafos para 
+        explorar as conexões entre as variáveis clínicas e biológicas.
+      </p>
+
+      <h2>A solução.</h2>
+      <p>
+        O projeto iniciou-se com a coleta de dados demográficos e clínicos de 47 pacientes com TEA do Hospital Universitário da 
+        Universidade de São Paulo (USP), 
+        como idade, sexo, <i>scores</i> de escalas clínicas do TEA e marcadores biológicos, que são o foco do projeto: 
+        <span style="color: #7DF9C2;">testosterona, ACTH, vasopressina, serotonina, ocitocina e cortisol</span>. 
+        <br><br>
+        O processamento, análise e plotagem dos dados foi realizado integralmente em 
+        <span style="color: #7DF9C2;">R (v4.5.1, Windows)</span>. Os dados brutos foram minuciosamente tratados, valores ausentes 
+        <span style="color: #7DF9C2;">imputados pela média</span> e normalizados por <span style="color: #7DF9C2;">z-score</span>. 
+        Com a base de dados preparada, a análise de grafos foi implementada com o pacote <span style="color: #7DF9C2;">EGAnet</span>
+        <br><br>
+        Inicialmente, apliquei o método <span style="color: #7DF9C2;">UVA (Unique Variable Analysis)</span> para identificar e remover
+        redundâncias na rede, processo que garante que o grafo apresente as relações mais 
+        <span style="color: #7DF9C2;">significativas e interpretáveis</span>. Em seguida, utilizei o 
+        <span style="color: #7DF9C2;">EGA (Exploratory Graph Analysis)</span>, que me permitiu plotar o grafo e identificar 
+        automaticamente as correlações (por Pearson) e clusters (comunidades) de cada nó.
+        <br><br>
+        Para validar a robustez e a estabilidade da rede, obtive as principais medidas estatísticas e realize uma análise por 
+        <span style="color: #7DF9C2;">bootstrap</span>, técnica de reamostragem que retorna a frequência de replicação 
+        de cada nó em uma determinada comnunidade, útil para verificar a 
+        <span style="color: #7DF9C2;">reprodutibilidade e estabilidade</span> da estrutura obtida.
+      </p>
+
+      <h2>Resultados.</h2>
+      <p>
+        A análise de redes identificou comportamentos que podem ajudar a entender a relação entre os biomarcadores analisados 
+        e sintomas do Transtorno do Espectro Autista, como a relação entre a <span style="color: #7DF9C2;">vasopressina </span>
+        e a ativação de sintomas de <span style="color: #7DF9C2;">agressividade a autoagressividade</span>. 
+        <br><br>
+        Durante o projeto, pude aprimorar minha expertise em <span style="color: #7DF9C2;">R e métodos estatísticos</span>, bem como 
+        entender <span style="color: #7DF9C2;">grafos</span> como uma estrutura de dados complexa, com propriedades únicas. 
+        Além disso, pude contribuir com profissionais de áreas diversas à minha e de uma instituição renomada, 
+        a Universidade de São Paulo (USP), aprimorando minhas habilidades 
+        <span style="color: #7DF9C2;">interpessoais e de comunicação</span>.
+      </p>
+    </div>
+
+    <div class="project-links">
+      <a href="https://github.com/caio16/analise-grafos" target="_blank" class="btn">Ver Repositório (GitHub)</a>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Buddy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── REUTILIZANDO SEU ESTILO BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b0b0f;
+      --surface: #111117;
+      --border: #1e1e28;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --accent: #7DF9C2;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      line-height: 1.7;
+      padding: 4rem 2rem;
+    }
+    /* Ruído de Fundo */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: -1; opacity: 0.4;
+    }
+
+    /* ── ESTILOS ESPECÍFICOS DA PÁGINA DE PROJETO ── */
+    .container {
+      max-width: 900px; /* Aumentei um pouco para caber as 2 imagens lado a lado */
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 3rem;
+      transition: opacity 0.2s;
+    }
+    .back-btn:hover { opacity: 0.8; }
+
+    header { margin-bottom: 4rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+    
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .meta-info {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    /* Área de Conteúdo */
+    .content { font-size: 1rem; color: var(--text); }
+    .content p { margin-bottom: 1.5rem; }
+    .content h2 { 
+        font-family: 'Syne', sans-serif; 
+        color: var(--text);
+        letter-spacing: -0.03em;
+        margin-top: 3rem; 
+        margin-bottom: 1.5rem;
+        line-height: 1.15; 
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    
+    /* ── NOVA GALERIA (Duas colunas) ── */
+    .project-gallery {
+      display: grid;
+      grid-template-columns: 1fr; /* Duas colunas iguais */
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-label {
+      padding: 0.75rem 1rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Responsivo: No celular vira uma coluna só */
+    @media (max-width: 768px) {
+      .project-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Links do Rodapé */
+    .project-links {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 1rem;
+    }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      border: 1px solid var(--accent);
+      color: var(--bg);
+      background: var(--accent);
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: transparent; color: var(--accent); }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="back-btn">← Home</a>
+
+    <header>
+      <h1>Study Buddy</h1>
+      <div class="meta-info">
+        <span>Ano: 2024</span>
+        <span>Stack: Python</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <h2>O desafio.</h2>
+      <p>
+        <span style="color: #7DF9C2;">Como organizar o tempo de estudo para as disciplinas da universidade de acordo com um critério 
+        subjetivo?</span> Esse foi um questionamento que tive desde o início da minha graduação. Na Universidade Federal do ABC, há 
+        uma recomendação de horas de estudo individual semanal para cada disciplina. No entanto, essa recomendação não leva em conta
+        a dificuldade ou familiaridade que o discente tem nela, tornando (quase sempre) inaplicável essa recomendação. 
+      </p>
+
+      <h2>A solução.</h2>
+      <p>
+        De forma inicial, foi necessário definir como podemos transformar a dificuldade que o discente tem em uma disciplina em um 
+        <span style="color: #7DF9C2;">critério matemático</span>. Para isso, separamos 5 categorias para a dificuldade na disciplina: 
+        péssimo, ruim, mediano, bom e ótimo. A cada categoria foi atribuído um valor: 5x, 4x, 3x, 2x e 1x, respectivamente. Após isso, 
+        a ideia foi atribuir esses valores às disciplinas em questão. Em seguida, precisamos definir o banco de horas que podemos utilizar com estudos
+        durante a semana.
+        <br><br>
+        Vamos adotar um cenário hipotético de um aluno ingressante para exemplificar. No primeiro quadrimestre na UFABC temos as disciplinas Estrutura
+        da Matéria (EM), Bases Matemáticas (BM), Bases Epistemológicas da Ciência Moderna (BECM), Bases Experimentais das Ciências Naturais (BECN) 
+        e Evolução e Diversificação da Vida na Terra (EDVT). O aluno hipotético tem o seguinte sentimento em relação a essas disciplinas: 
+        <span style="color: #7DF9C2;">"sou mediano em EM (3x), péssimo em BM (5x), bom em BECM (2x), mediano em BECN (3x) e ótimo em EDVT (1x), 
+        e vou me comprometer a estudar 4 horas durante 7 dias da semana!"</span>. 
+        <br><br>
+        Com essas informações, <span style="color: #7DF9C2;">dividimos</span> o total de horas semanais que o aluno se compromete a estudar pela 
+        <span style="color: #7DF9C2;">soma</span> dos "x" atribuídos pelo aluno:
+
+        <div style="text-align: center; color: #7DF9C2; margin: 2.5rem 0; font-size: 1.2rem; font-weight: 500;">
+        28 / (3x + 5x + 2x + 3x + 1x) = <br><br>
+        28 / 14 = <br><br>
+        2
+        </div>
+
+        <p>
+        </p>
+        Por fim, substituímos o "x" pelo valor obtido para obter o número de horas que o aluno deve dedicar para a disciplina com base na sua dificuldade
+        e disponibilidade semanal:
+
+        <div style="text-align: center; color: #7DF9C2; margin: 2.5rem 0; font-size: 1.2rem; font-weight: 500;">
+        / EM: 3 * 2 = 6h / <br>/ BM: 5 * 2 = 10h / <br>/ BECM: 2 * 2 = 4h / <br>/ BECN: 3 * 2 = 6h / <br>/ EDVT: 1 * 2 = 2h / <br><br>
+        Total: 6h + 10h + 4h + 6h + 2h = 28h redistribuídas conforme a dificuldade! <br><br>
+        </div>
+
+        <p>
+        </p>
+      </p>
+
+      <h2>Resultados.</h2>
+      <p>
+        O projeto foi desenvolvido para a disciplina de Processamento da Informação na UFABC. Como consequência de um quadrimestre inteiro de esforço no 
+        desenvolvimento e aprimoramento do código e de toda a lógica por trás, obtivemos a <span style="color: #7DF9C2;">melhor avaliação</span> 
+        da turma e compartilhamos o projeto com toda a comunidade acadêmica, com o objetivo de facilitar a jornada do estudante.
+      </p>
+    </div>
+
+    <div class="project-gallery">
+      <div class="gallery-item">
+        <div class="gallery-label">// Snippet do Código (Python): Cálculos</div>
+        <img src="studybuddy.png" alt="Print do Código Py">
+      </div>
+
+    <div class="project-links">
+      <a href="https://github.com/caio16/newstudybuddy" target="_blank" class="btn">Ver Repositório (GitHub)</a>
+    </div>
+
+  </div>
+
+</body>
+</html>

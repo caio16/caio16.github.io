@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caio — Dev & Researcher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0b0f;
+      --surface: #111117;
+      --border: #1e1e28;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --accent: #7DF9C2;
+      --accent-dim: rgba(125, 249, 194, 0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.50rem 4rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(11, 11, 15, 0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-inner {
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s forwards 0.2s;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s forwards 0.35s;
+    }
+
+    h1 .dim { color: var(--muted); }
+
+    .hero-desc {
+      max-width: 520px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.7s forwards 0.5s;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s forwards 0.65s;
+    }
+
+    .btn {
+      padding: 0.75rem 1.75rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0b0b0f;
+      font-weight: 500;
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover { background: transparent; color: var(--accent); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 8rem 4rem;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .about-text p + p { margin-top: 1rem; }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 0.5rem;
+    }
+
+    .stack-item {
+      background: var(--bg);
+      padding: 1rem 1.25rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .stack-item:hover {
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .stack-item span {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--border);
+      margin-bottom: 0.25rem;
+      color: var(--accent);
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience {
+      padding: 8rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 3rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .timeline-item:hover { background: var(--accent-dim); margin: 0 -2rem; padding: 2.5rem 2rem; }
+
+    .timeline-date {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding-top: 0.2rem;
+    }
+
+    .timeline-content h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-content .company {
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .timeline-content p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ── PROJECTS ── */
+    #projects {
+      padding: 8rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 4rem;
+    }
+
+    .project-card {
+      background: var(--bg);
+      padding: 2.5rem;
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 2px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.3s ease;
+    }
+
+    .project-card:hover::before { height: 100%; }
+    .project-card:hover { background: var(--surface); }
+
+    .project-num {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .project-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.6rem;
+      border-radius: 1px;
+    }
+
+    .project-link {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.2s;
+    }
+
+    .project-link:hover {
+        color: var(--accent);
+    }
+
+    .project-link::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 8rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .contact-left h2 { margin-bottom: 1rem; }
+
+    .contact-left p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .contact-link:last-child { border-bottom: none; }
+
+    .contact-link:hover {
+      background: var(--accent-dim);
+      color: var(--accent);
+      padding-left: 2rem;
+    }
+
+    .contact-link .arrow { font-size: 0.9rem; transition: transform 0.2s; }
+    .contact-link:hover .arrow { transform: translateX(4px); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { padding: 0 1.5rem; }
+      #about, #contact { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
+      #experience, #projects { padding: 5rem 1.5rem; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">Caio Peixoto<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">Sobre</a></li>
+      <li><a href="#experience">Experiência</a></li>
+      <li><a href="#projects">Projetos</a></li>
+      <li><a href="#contact">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <p class="hero-tag">// Desenvolvedor de Software · Pesquisador</p>
+      <h1>
+        Caio<br />
+        <span class="dim">Cientista</span><br />
+        <span class="dim">em formação.</span>
+      </h1>
+      <p class="hero-desc">
+        Estudante do Bacharelado em Ciência e Tecnologia e em Ciência da Computação na 
+        Universidade Federal do ABC (UFABC), com interesse em
+        engenharia de software, IA/ML e desenvolvimento de sistemas.
+        Atualmente estagiário em bioestatística na IQVIA.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">Ver projetos</a>
+        <a href="#contact" class="btn btn-ghost">Entrar em contato</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-left reveal">
+      <p class="section-label">// 01 — Sobre mim</p>
+      <h2>Código, dados<br/>e curiosidade.</h2>
+      <div class="about-text">
+        <p>
+          Tenho 23 anos e curso simultaneamente o <span style="color: #7DF9C2;">Bacharelado em Ciência e
+          Tecnologia</span> e o <span style="color: #7DF9C2;">Bacharelado em Ciência da Computação</span>
+          Universidade Federal do ABC.
+        </p>
+        <p>
+            Minha formação <span style="color: #7DF9C2;">interdisciplinar</span> aguçou minha curiosidade e busca
+            por inovação a fim de integrar diferentes áreas do conhecimento.
+            Acredito que a busca por códigos eficientes e que resolvam de fato
+            nossos problemas se dá não apenas na resolução do desafio em si, mas também
+            no entendimento de problemas passados e na prospecção de possíveis futuros desafios.
+        </p>
+        <p>
+            Atualmente sou <span style="color: #7DF9C2;">estagiário em bioestatística</span> pela 
+            <span style="color: #7DF9C2;">IQVIA</span>, empresa líder em soluções tecnológicas
+            para a área da saúde, realizando a programação de análises estatísticas. Tal atuação me 
+            aproximou de práticas em <span style="color: #7DF9C2;">manipulação de dados</span> em larga escala, 
+            <span style="color: #7DF9C2;">modelagem e rigor científico</span> e 
+            consolidou minhas bases em <span style="color: #7DF9C2;">lógica de programação</span>.
+        </p>
+        <p>
+          Sou apaixonado por <span style="color: #7DF9C2;">IA/ML</span> e acredito que o futuro da engenharia de software
+          está na interseção entre software bem construído e inteligência artificial.
+        </p>
+      </div>
+    </div>
+    <div class="about-right reveal">
+      <p class="section-label">// Stack & Interesses</p>
+      <div class="stack-grid">
+        <div class="stack-item"><span>Linguagens</span>Python / Java / C / C++ / C# / R</div>
+        <div class="stack-item"><span>Web</span>HTML / CSS / JS</div>
+        <div class="stack-item"><span>Dados</span>R / Stats</div>
+        <div class="stack-item"><span>IA / ML</span>TensorFlow / PyTorch / Scikit-learn</div>
+        <div class="stack-item"><span>Banco de dadsos</span>SQL</div>
+        <div class="stack-item"><span>Ferramentas</span>Git / GitLab / GitHub / Azure DevOps / Databricks / VSCode / genAI</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="exp-header reveal">
+      <div>
+        <p class="section-label">// 02 — Experiência</p>
+        <h2>Onde já estive.</h2>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-date">mar/2025 — Atual</div>
+        <div class="timeline-content">
+          <h3>Estagiário em Bioestatística</h3>
+          <p class="company">IQVIA - Híbrido</p>
+          <p>
+            Análise e processamento de dados clínicos, programação de análises estatísticas
+            (modelos de regressão, análises de sobrevida, descritivas) em R, SAS e Python, conferência
+            de documentos para controle de qualidade, automação de processos e presença em congressos
+            acadêmicos.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">jun/2024 - mar/2025</div>
+        <div class="timeline-content">
+          <h3>Especialista em Relacionamento com o Cliente</h3>
+          <p class="company">Atento - Home Based</p>
+          <p>
+            Gerenciamento de redes sociais e marketing digital, profeciência em língua inglesa para 
+            comunicação com equipe internacional, escuta ativa, organização de indicadores de qualidade,
+            ponto focal em análise de dados pertinentes aos resultados das equipes.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">nov/2023 - jun/2024</div>
+        <div class="timeline-content">
+          <h3>Pesquisador Bolsista</h3>
+          <p class="company">Universidade Federal do ABC - Presencial</p>
+          <p>
+            Contemplado com bolsa de pesquisa pela Universidade Federal do ABC, desenvolvi um projeto 
+            de caracterização físico-química das cascas de três variedades de bananas (nanica, prata e maçã)
+            a fim de verificar sua viabilidade na aplicação em uma biorrefinaria.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">abr/2021 - nov/2023</div>
+        <div class="timeline-content">
+          <h3>Suporte Técnico</h3>
+          <p class="company">Concentrix - Home Based</p>
+          <p>
+            Atendimento receptivo de clientes via telefone, e-mail e chat para resolução de problemas em 
+            dispositivos eletrônicos (celulares, smartwatches, computadores, tablets), monitoria de qualidade 
+            do atendimento de outros agentes, elaboração e apresentação de materiais educativos para melhorar
+            os resultados da operação
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">jul/2019 - abr/2021</div>
+        <div class="timeline-content">
+          <h3>Estagiário Acadêmico</h3>
+          <p class="company">CIEE/ETEC Jorge Street - Híbrido</p>
+          <p>
+            Rotina admnistrativa em secretaria acadêmica, elaboração de documentos escolares, atendimento
+            presencial e telefônico da comunidade escolar, atualização e consulta em banco de dados internos
+            da Secretaria da Educação.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <p class="section-label">// 03 — Projetos</p>
+      <h2>O que eu construo.</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <p class="project-num">001</p>
+        <h3>
+            <a href="projeto-01.html" class="project-link">Projeto Acadêmico</a>
+        </h3>
+        <p>
+            Código em R que limpa dados brutos, normaliza e realiza as devidas manipulações estatísticas para 
+            gerar um grafo que exprime, em essência, as correlações entre marcadores biológicos.
+        </p>
+        <div class="project-tags">
+          <span class="tag">R</span>
+          <span class="tag">Bioinformática</span>
+          <span class="tag">Estatística</span>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <p class="project-num">002</p>
+        <h3>
+            <a href="projeto-02.html" class="project-link">Study Buddy</a>
+        </h3>
+        <p>Aplicação desenvolvida exclusivamente em Python que calcula uma sugestão de tempo de estudo semanal 
+            em determinada disciplina do Bacharelado em Ciência e Tecnologia da UFABC, com base no nível de dificuldade que
+            o estudante tem nela.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Tkinter</span>
+          <span class="tag">Matplotlib</span>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <p class="project-num">003</p>
+        <h3>
+            <a href="projeto-03.html" class="project-link">Tópicos em Estatística</a>
+        </h3>
+        <p>Trabalhos em bioestatística realizados através da IQVIA.</p>
+        <div class="project-tags">
+          <span class="tag">Estatística</span>
+          <span class="tag">R</span>
+          <span class="tag">SAS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <p class="section-label">// 04 — Contato</p>
+      <h2>Vamos conversar?</h2>
+      <p>
+        Aberto a oportunidades em engenharia de software, projetos de IA/ML
+        e colaborações acadêmicas. Me manda uma mensagem!
+      </p>
+      <a href="mailto:caio.esthevao16@gmail.com" class="btn btn-primary" style="margin-top: 2rem; display: inline-block;">
+        caio.esthevao16@gmail.com
+      </a>
+    </div>
+    <div class="reveal">
+      <div class="contact-links">
+        <a href="https://github.com/caio16" target="_blank" class="contact-link">
+          <span>GitHub</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/caio-peixoto-039183208/" target="_blank" class="contact-link">
+          <span>LinkedIn</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="https://drive.google.com/file/d/18fvfpKrFT87_0X77Pf1xHXzymI1EwLWW/view?usp=sharing" target="_blank" class="contact-link">
+          <span>Currículo (PDF)</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Caio Peixoto</span>
+    <span>Desenvolvido com cuidado ·  Diadema, SP</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) {
+          el.target.classList.add('visible');
+          observer.unobserve(el.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

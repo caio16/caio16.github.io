@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tópicos em Estatística</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── REUTILIZANDO SEU ESTILO BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b0b0f;
+      --surface: #111117;
+      --border: #1e1e28;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --accent: #7DF9C2;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      line-height: 1.7;
+      padding: 4rem 2rem;
+    }
+    /* Ruído de Fundo */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: -1; opacity: 0.4;
+    }
+
+    /* ── ESTILOS ESPECÍFICOS DA PÁGINA DE PROJETO ── */
+    .container {
+      max-width: 900px; /* Aumentei um pouco para caber as 2 imagens lado a lado */
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 3rem;
+      transition: opacity 0.2s;
+    }
+    .back-btn:hover { opacity: 0.8; }
+
+    header { margin-bottom: 4rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+    
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .meta-info {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    /* Área de Conteúdo */
+    .content { font-size: 1rem; color: var(--text); }
+    .content p { margin-bottom: 1.5rem; }
+    .content h2 { 
+        font-family: 'Syne', sans-serif; 
+        color: var(--text);
+        letter-spacing: -0.03em;
+        margin-top: 3rem; 
+        margin-bottom: 1.5rem;
+        line-height: 1.15; 
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    
+    /* ── NOVA GALERIA (Duas colunas) ── */
+    .project-gallery {
+      display: grid;
+      grid-template-columns: 1fr; /* Duas colunas iguais */
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-label {
+      padding: 0.75rem 1rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Responsivo: No celular vira uma coluna só */
+    @media (max-width: 768px) {
+      .project-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Links do Rodapé */
+    .project-links {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 1rem;
+    }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      border: 1px solid var(--accent);
+      color: var(--bg);
+      background: var(--accent);
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: transparent; color: var(--accent); }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="back-btn">← Home</a>
+
+    <header>
+      <h2>// 001: Tendência e Sazonalidade da Mortalidade Padronizada por Idade por Cãncer Colorretal no Brasil entre 2009 e 2022</h2>
+      <div class="meta-info">
+        <span>Ano: 2025</span>
+        <span>Stack: R, Jointpoint Regression</span>
+      </div>
+    </header>
+
+    <div class="project-gallery">
+      <div class="gallery-item">
+        <div class="gallery-label">// Certificado de Apresentação do Pôster</div>
+        <img src="emr.png" alt="Print do Código Py">
+      </div>
+
+    <div class="content">
+      <h2>O desafio.</h2>
+      <p>
+        <span style="color: #7DF9C2;">O câncer colorretal é um dos tipos de neoplasia com maior incidência e mortalidade no mundo. 
+        No Brasil, entender o comportamento desses óbitos ao longo do tempo é essencial para o planejamento de políticas de saúde pública.</span> 
+        O objetivo deste projeto, desenvolvido em equipe na <span style="color: #7DF9C2;">IQVIA</span>, foi analisar a 
+        <span style="color: #7DF9C2;">tendência temporal e a sazonalidade</span> da taxa de mortalidade padronizada por idade por câncer colorretal no 
+        Brasil, cobrindo o extenso período de <span style="color: #7DF9C2;">2009 a 2022</span>.
+      </p>
+
+      <h2>A solução.</h2>
+      <p>
+        A base de dados foi extraída do Sistema de Informações sobre Mortalidade (SIM) do <span style="color: #7DF9C2;">DATASUS</span>. 
+        Para garantir a confiabilidade da análise, realizamos todo o tratamento, limpeza e padronização das taxas de mortalidade utilizando a linguagem <span style="color: #7DF9C2;">R</span>.
+        <br><br>
+        A modelagem estatística foi conduzida através do software <span style="color: #7DF9C2;">Joinpoint Regression</span> (desenvolvido pelo NCI - National Cancer Institute). Essa ferramenta nos permitiu identificar os <span style="color: #7DF9C2;">pontos de inflexão (joinpoints)</span>, ou seja, os momentos exatos em que houve mudança significativa na tendência da mortalidade (aumento ou queda), além de calcular a Variação Percentual Anual (APC) e a Variação Percentual Anual Média (AAPC).
+      </p>
+
+      <h2>Resultados.</h2>
+      <p>
+        O estudo permitiu visualizar com clareza as métricas de evolução da mortalidade no país, oferecendo insumos baseados em dados reais para a compreensão epidemiológica da doença.
+        <br><br>
+        Como reconhecimento da robustez técnica e metodológica aplicada, este trabalho foi selecionado e apresentado em formato de pôster na 
+        <span style="color: #7DF9C2;">EMR (Escola de Modelos de Regressão)</span> de 2025, realizada em <span style="color: #7DF9C2;">João Pessoa</span>, um dos eventos mais importantes de estatística e modelagem do Brasil.
+      </p>
+    </div>
+
+    <div class="project-links">
+      <a href="https://xixemrvepbest.softaliza.com.br" target="_blank" class="btn">Ver Site (XIX EMR)</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
